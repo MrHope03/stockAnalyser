@@ -34,7 +34,7 @@ public class UserRestController {
         return userService.getUserById(id);
     }
 
-    @GetMapping ("/user/{name}")
+    @GetMapping ("/profile/{name}")
     public UserAccount getUserByUsername (@PathVariable("name") String name) {
         return userService.getUserByName(name);
     }

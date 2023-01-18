@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,6 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserAccount addUser(UserAccount user) {
+        user.setId(UUID.randomUUID().toString().split("-")[0]);
         return repo.save(user);
     }
 
@@ -30,6 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserAccount getUserByName(String name) {
-        return repo.findByusername(name);
+        return repo.findByname(name);
     }
 }
