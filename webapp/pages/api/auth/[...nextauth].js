@@ -2,12 +2,18 @@ import axios from "axios";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
+import clientPromise from "../../../db/conn";
+
 
 export const authOptions = {
-  session: {
-    jwt: true,
-  },
+  adapter: MongoDBAdapter(clientPromise),
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
@@ -18,23 +24,33 @@ export const authOptions = {
         username: { label: "username", type: "text" },
         password: { label: "password", type: "password" }
       },
-      async authorize(credentials, req) {
-        console.log(credentials)
-        const res = await axios.get('http://localhost:8000/user/' + credentials.username);
-        const data = await res.data;
-        if (credentials.password == data.password) {
-          return { email: data.email, name: data.username };
+      async authorize(credentials) {
+        try {
+          const res = await axios.get('http://localhost:8000/profile/' + credentials.username);
+          const data = await res.data;
+          if (credentials.password == data.password) {
+            return data;
+          }
+          else
+            return null;
+        } catch {
+          console.log(error);
+          return null;
         }
-        return null;
       }
     }),
   ],
+  session: {
+    jwt: true,
+    strategy: "jwt",
+  },
+  jwt: {
+    secret: 'XH6bp/TkLvnUkQiPDEZNyHcOCV+VV5RL/n+HdVHoHNO=',
+  },
   pages: {
     signIn: '/login',
-    newUser: '/signup'
-  }
-
+    newUser: '/',
+  },
 }
 export default NextAuth(authOptions)
-
 

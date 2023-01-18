@@ -22,7 +22,7 @@ const Signup = () => {
 		console.log(signupData)
 		if (signupData.confirmPassword == signupData.password) {
 			try {
-				const res = await axios.post('http://localhost:8000/u', signupData);
+				const res = await axios.post('http://localhost:8000/u', { ...signupData, name: signupData.username, providerType: "credentials" });
 				const data = await res.data;
 				signIn('credentials', { username: signupData.username, password: signupData.password, callbackUrl: 'http://localhost:3000' });
 			} catch (err) {
@@ -73,6 +73,9 @@ const Signup = () => {
 			<p>or</p>
 			<div>
 				<button className={style.loginbtn} onClick={() => signIn('github', { callbackUrl: 'http://localhost:3000' })}>Signin using Github</button>
+			</div>
+			<div>
+				<button className={style.loginbtn} onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000' })}>Signin using Google</button>
 			</div>
 			<Link href='/login'>already have an account</Link>
 		</div>

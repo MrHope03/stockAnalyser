@@ -1,3 +1,4 @@
+@import "./variables.scss";
 .err {
     color: red;
 }
@@ -16,15 +17,16 @@
     @include btn;
     padding: 0.5em 3em;
     border-radius: 5px;
+    margin: 0.5em;
 }
 .form {
     display: flex;
     flex-direction: column;
-    background-color: aliceblue;
+    background-color: $dark-fg;
     max-width: 30%;
     min-width: 25em;
     margin: auto;
-    color: #000000;
+    color: $dark-txt;
     align-items: center;
     margin: 2% auto;
     padding: 0.5em;
@@ -62,11 +64,11 @@
         }
     }
     p {
-      margin-top: 0.2em;
+        margin-top: 0.2em;
     }
     a {
-      margin: 1em;
-        color: #143df5;
+        margin: 1em;
+        color: $anchor-txt;
         font-weight: 500;
         &:hover {
             border-bottom: 1px solid #3366cc;

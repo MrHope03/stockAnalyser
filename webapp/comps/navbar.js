@@ -4,7 +4,6 @@ import { useSession, signIn, signOut, newUser } from "next-auth/react"
 
 const NavBar = () => {
 	const { data: session } = useSession();
-	console.log('Session:' + session)
 	return (
 		<nav>
 			<ul>
@@ -12,14 +11,14 @@ const NavBar = () => {
 				{
 					!session ? (
 						<>
-							<li onClick={() => signIn()}>login</li>
+							<Link href="/login"><li>login</li></Link>
 							<Link href="/signup"><li>Signup</li></Link>
 						</>
 					)
 						: (
 							<>
-								<li>{session.user.name}</li>
-								<li onClick={() => signOut()}>logout</li>
+								<Link href={`/user/${session.user.name}`}><li>{session.user.name}</li></Link>
+								<li onClick={() => signOut({ scallbackUrl: 'http://localhost:3000' })}>logout</li>
 							</>
 						)
 				}
