@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useSession, signIn, signOut, newUser } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 
 
 const NavBar = () => {
@@ -8,6 +8,7 @@ const NavBar = () => {
 		<nav>
 			<ul>
 				<Link href="/"><li>Home</li></Link>
+				<Link href="/market"><li>Market</li></Link>
 				{
 					!session ? (
 						<>

@@ -2,10 +2,12 @@ import style from '../styles/login.module.scss';
 import { useState } from 'react';
 import Link from 'next/link'
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const Login = () => {
 	const [loginData, setLoginData] = useState({});
 	const [errMsg, setErrMsg] = useState(false);
+	const router = useRouter();
 
 	const handleChange = (e) => {
 		let key = e.target.name;
@@ -16,7 +18,14 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			signIn('credentials', { username: loginData.username, password: loginData.password, callbackUrl: 'http://localhost:3000' });
+			signIn('credentials', { username: loginData.username, password: loginData.password, redirect: false, }).then(({ ok, err }) => {
+				if (ok) {
+					router.push("/");
+				}
+				else {
+					setErrMsg(true);
+				}
+			});
 		}
 		catch (err) {
 			console.log('NotValidUser' + err);
@@ -31,6 +40,12 @@ const Login = () => {
 			{
 				errMsg &&
 				<p className={style.err}>Please enter correct username and password!</p>
+			}
+			{
+				(router.query["error"] == "OAuthAccountNotLinked") &&
+				<>
+					<p className={style.err}>Already existing email! Try login using other Credentials!</p>
+				</>
 			}
 			<form onSubmit={handleSubmit} >
 				<div>
@@ -51,10 +66,10 @@ const Login = () => {
 			</form>
 			<p>or</p>
 			<div>
-				<button className={style.loginbtn} onClick={() => signIn('github',{ callbackUrl: 'http://localhost:3000' })}>Signin using Github</button>
+				<button className={style.loginbtn} onClick={() => signIn('github', { callbackUrl: 'http://localhost:3000' })}>Signin using Github</button>
 			</div>
 			<div>
-				<button className={style.loginbtn} onClick={() => signIn('google',{ callbackUrl: 'http://localhost:3000' })}>Signin using Google</button>
+				<button className={style.loginbtn} onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000' })}>Signin using Google</button>
 			</div>
 			<Link href='/signup'>create a new account</Link>
 		</div>

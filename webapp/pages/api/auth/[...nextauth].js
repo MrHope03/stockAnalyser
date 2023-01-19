@@ -49,7 +49,7 @@ export const authOptions = {
   },
   pages: {
     signIn: '/login',
-    newUser: '/',
+    error: '/error',
   },
 }
 export default NextAuth(authOptions)

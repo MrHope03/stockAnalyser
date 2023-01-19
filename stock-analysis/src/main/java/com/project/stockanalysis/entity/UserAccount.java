@@ -25,5 +25,6 @@ public class UserAccount {
     private String email;
     @NotBlank
     private String password;
+    private String image;
     private String providerType;
 }
