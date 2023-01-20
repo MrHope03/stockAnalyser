@@ -2,6 +2,7 @@
 
 .searchSection {
     width: 100%;
+    position: relative;
     @include flexbox(column);
     justify-content: center;
     align-items: center;
@@ -19,6 +20,7 @@
         background-position: 10px 10px;
         background-repeat: no-repeat;
     }
+    @include Portal();
 }
 .stockcontainer {
     border: 1px solid white;

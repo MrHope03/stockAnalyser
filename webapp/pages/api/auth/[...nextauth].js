@@ -26,7 +26,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await axios.get('http://localhost:8000/profile/' + credentials.username);
+          const res = await axios.get('http://localhost:8000/u/' + credentials.username);
           const data = await res.data;
           if (credentials.password == data.password) {
             return data;

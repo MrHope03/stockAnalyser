@@ -5,14 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Document(collection = "users")
 public class UserAccount {
@@ -27,4 +27,11 @@ public class UserAccount {
     private String password;
     private String image;
     private String providerType;
+    private Double balance;
+    private List<UserStock> userStocks;
+
+    public UserAccount() {
+        this.balance = (double) 0;
+        this.userStocks = new ArrayList<>();
+    }
 }

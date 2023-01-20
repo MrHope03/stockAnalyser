@@ -1,15 +1,19 @@
 import CandleStickGraph from "../comps/CandleStickGraph";
 import style from "./../styles/market.module.scss"
 import { useRouter } from "next/router"
+import { useSession } from "next-auth/react";
 
-const StockDashboard = ({ stock }) => {
+
+const StockDashboard = ({ stock, setBuyPortal }) => {
 	const router = useRouter();
+	const { data: session } = useSession();
+
 	return (
 		<div className={style.stockcontainer}>
 			<div className={style.stockData}>
 				<div className={style.stockheader}>
 					<h2>{stock.symbol} : {stock.name}
-						<button onClick={() => { router.push("/") }}>Buy Stocks</button>
+						<button onClick={() => { if (session) setBuyPortal(true); else router.push("/login") }}>Buy Stocks</button>
 					</h2>
 					<div>
 						<p>Price Summary</p>

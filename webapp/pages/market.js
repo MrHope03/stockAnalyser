@@ -3,14 +3,14 @@ import { useState } from "react";
 import style from "./../styles/market.module.scss"
 import Loading from "../comps/loading"
 import StockDashboard from "../comps/StockDashboard";
-
+import BuyPortal from "../comps/buyPortal";
 
 const Market = () => {
 	const [symbol, setSymbol] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [stock, setStock] = useState(null)
-
-
+	const [buyPortal, setBuyPortal] = useState(false);
+	
 	const handleChange = (e) => {
 		setSymbol(e.target.value);
 	}
@@ -21,8 +21,7 @@ const Market = () => {
 			const res = await axios.get(`http://localhost:8000/stock/${symbol}`);
 			const data = await res.data;
 			setLoading(false)
-			setStock(data.stock);
-			console.log(data.stock.history[0].date)
+			setStock(data);
 		}
 	}
 
@@ -34,7 +33,10 @@ const Market = () => {
 				<Loading />
 			}
 			{stock &&
-				<StockDashboard stock={stock} />
+				<StockDashboard stock={stock} setBuyPortal={setBuyPortal} />
+			}
+			{buyPortal  &&
+				<BuyPortal stock={stock} setBuyPortal={setBuyPortal}/>
 			}
 		</section>
 	)
