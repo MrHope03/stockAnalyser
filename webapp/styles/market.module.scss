@@ -2,12 +2,14 @@
 
 .searchSection {
     width: 100%;
+    min-height: 75vh;
     position: relative;
     @include flexbox(column);
     justify-content: center;
     align-items: center;
     p {
-        font-size: 25px;
+        font-size: 5em;
+        margin-bottom: 0.5em;
     }
     .searchbar {
         padding: 1em 1em 1em 3em;
@@ -62,4 +64,9 @@
         @include component();
         @include tables();
     }
+}
+
+.err {
+    color: red;
+    font-size: 1.2em;
 }

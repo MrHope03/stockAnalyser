@@ -1,10 +1,21 @@
 @import "./variables.scss";
 
+.dashboardTitle {
+    text-align: center;
+    font-size: 4em;
+    background: linear-gradient(75deg, #ffffff, #37b6ff, #243dfc, #003cff);
+    color: transparent;
+    -webkit-background-clip: text;
+    border-bottom: 2px solid #003cff;
+    width: fit-content;
+    margin: 0.5em auto;
+}
 .dashboard {
     @include Portal();
     .buyPortal {
         transform: translate(-50%, -50%);
     }
+    min-height: 80vh;
 
     @include flexbox(row);
     justify-content: space-evenly;
@@ -27,6 +38,12 @@
             border-radius: 100%;
             border: 3px solid #727272;
         }
+        button {
+            @include btn();
+            margin-top: 1em;
+            border-radius: 2em;
+            width: 80%;
+        }
     }
     .stockDashboard {
         @include flexbox(column);
@@ -39,11 +56,11 @@
                 padding: 0.5em;
                 width: 100%;
                 text-align: center;
-
                 p {
                     font-weight: 600;
                 }
                 button {
+                    margin: 0em 0.5em;
                     &:hover {
                         cursor: pointer;
                     }

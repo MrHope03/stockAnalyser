@@ -1,9 +1,11 @@
 @import "./variables.scss";
 
 html,
-body {
+body,
+main {
     padding: 0;
     margin: 0;
+    height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -30,35 +32,37 @@ a {
 }
 
 footer {
-    display: flex;
-    flex: 1;
-    padding: 2rem 0;
-    /* border-top: 1px solid #eaeaea; */
-    justify-content: center;
+    margin-top: 5em;
+    padding-bottom: 2em;
+    @include flexbox(column);
+    // border-top: 1px solid #eaeaea;
     align-items: center;
-}
-
-footer a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-
+    p {
+        font-size: 1.5em;
+    }
+    div {
+        @include flexbox(row);
+        justify-content: center;
+        width: fit-content;
+        a {
+            margin: 0em 1em;
+        }
+    }
 }
 
 nav ul {
     width: 100%;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid #eaeaea;
 }
 nav ul li {
-    padding: 0.5em;
+    padding: 1em;
     list-style: none;
-    font-size: 18px;
+    font-size: 20px;
 }
 nav ul li:hover {
     color: white;
+    text-decoration: underline;
 }
 .err {
     color: red;
@@ -90,8 +94,9 @@ nav ul li:hover {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 80vh;
+    height: 70vh;
     align-items: center;
+    margin: 0;
     justify-content: center;
     h1 {
         font-size: 50px;

@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { useState } from "react";
 import SellPortal from "../../comps/sellPortal"
 import Wallet from "../../comps/addBalance";
+import { signOut } from "next-auth/react";
 
 export async function getServerSideProps(context) {
 	const session = await getSession(context);
@@ -12,6 +13,14 @@ export async function getServerSideProps(context) {
 		return {
 			redirect: {
 				destination: `/login`,
+				permanent: false,
+			},
+		}
+	}
+	if (context.params.profile != session.user.name) {
+		return {
+			redirect: {
+				destination: `/`,
 				permanent: false,
 			},
 		}
@@ -36,73 +45,78 @@ const UserProfile = ({ user }) => {
 	const [addBalance, setAddBalance] = useState(false);
 
 	return (
-		<div className={style.dashboard}>
-			<div className={style.stockDashboard}>
-				<div className={style.stockVal}>
-					<div>
-						<h3>User Balance</h3>
-						<p>{(user.balance).toFixed(2)} USD</p>
-						<button onClick={() => setAddBalance(true)}> + </button>
+		<>
+			<h1 className={style.dashboardTitle}>DashBoard</h1>
+			<div className={style.dashboard}>
+				<div className={style.stockDashboard}>
+					<div className={style.stockVal}>
+						<div>
+							<h3> User Balance
+								<button onClick={() => setAddBalance(true)}> + </button>
+							</h3>
+							<p>{(user.balance).toFixed(2)} USD</p>
+						</div>
+						<div>
+							<h3>Total Amount Invested</h3>
+							<p>{
+								(user.userStocks.reduce((total, stock) => total + (stock.price * stock.quantity), 0)).toFixed(2)
+							} USD</p>
+						</div>
+						<div>
+							<h3>Total Stocks Invested</h3>
+							<p>{user.userStocks.reduce((total, stock) => total + stock.quantity, 0)}</p>
+						</div>
 					</div>
-					<div>
-						<h3>Total Amount Invested</h3>
-						<p>{
-							(user.userStocks.reduce((total, stock) => total + (stock.price * stock.quantity), 0)).toFixed(2)
-						} USD</p>
-					</div>
-					<div>
-						<h3>Total Stocks Invested</h3>
-						<p>{user.userStocks.reduce((total, stock) => total + stock.quantity, 0)}</p>
+					<div className={style.stocks}>
+						{
+							user.userStocks.map((stock, key) => (
+								<div className={style.stock} key={key}>
+									<table>
+										<thead>
+											<tr>
+												<th>Stock ID</th>
+												<th>Stock Name</th>
+												<th>Quantity</th>
+												<th>Price</th>
+												<th>Curr Price</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>{stock.symbol}</td>
+												<td>{stock.name}</td>
+												<td>{stock.quantity}</td>
+												<td>{(stock.price).toFixed(2)} USD</td>
+												<td>{currPrice ? currPrice[key] : "-"} USD</td>
+											</tr>
+										</tbody>
+									</table>
+									{currPrice &&
+										currPrice[key] < stock.price ? (
+										<img src="/decrease.png" alt="Stock decrease" height={50} width={50} />
+									) : (
+										<img src="/increase.png" alt="Stock increase" height={50} width={50} />
+									)
+									}
+									<button onClick={() => setSellPortal(key)}>Sell</button>
+								</div>
+							))
+						}
 					</div>
 				</div>
-				<div className={style.stocks}>
-					{
-						user.userStocks.map((stock, key) => (
-							<div className={style.stock} key={key}>
-								<table>
-									<thead>
-										<tr>
-											<th>Stock ID</th>
-											<th>Stock Name</th>
-											<th>Quantity</th>
-											<th>Price</th>
-											<th>Curr Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>{stock.symbol}</td>
-											<td>{stock.name}</td>
-											<td>{stock.quantity}</td>
-											<td>{(stock.price).toFixed(2)} USD</td>
-											<td>{currPrice ? currPrice[key] : "-"} USD</td>
-										</tr>
-									</tbody>
-								</table>
-								{currPrice &&
-									currPrice[key] < stock.price ? (
-									<img src="/decrease.png" alt="Stock decrease" height={50} width={50} />
-								) : (
-									<img src="/increase.png" alt="Stock increase" height={50} width={50} />
-								)
-								}
-								<button onClick={() => setSellPortal(key)}>Sell</button>
-							</div>
-						))
-					}
+				<div className={style.userdetail}>
+					<img src={user.image} alt="user-avatar" height={150} width={150} />
+					<p>{user.name}</p>
+					<p>{user.email}</p>
+					<button className={style.logout} onClick={() => signOut({ callbackUrl: "http://localhost:3000" })}>log out</button>
 				</div>
+				{sellPortal != -1 &&
+					<SellPortal maxQty={user.userStocks[sellPortal].quantity} price={currPrice[sellPortal]} stock={user.userStocks[sellPortal]} setSellPortal={setSellPortal} />
+				}{addBalance &&
+					<Wallet currAmt={user.balance} setAddBalance={setAddBalance} user={user} />
+				}
 			</div>
-			<div className={style.userdetail}>
-				<img src={user.image} alt="user-avatar" height={150} width={150} />
-				<p>{user.name}</p>
-				<p>{user.email}</p>
-			</div>
-			{sellPortal != -1 &&
-				<SellPortal maxQty={user.userStocks[sellPortal].quantity} price={currPrice[sellPortal]} stock={user.userStocks[sellPortal]} setSellPortal={setSellPortal} />
-			}{addBalance &&
-				<Wallet currAmt={user.balance} setAddBalance={setAddBalance} user={user} />
-			}
-		</div>
+		</>
 	);
 }
 
