@@ -1,0 +1,63 @@
+@import "./variables.scss";
+
+.searchSection {
+    width: 100%;
+    @include flexbox(column);
+    justify-content: center;
+    align-items: center;
+    p {
+        font-size: 25px;
+    }
+    .searchbar {
+        padding: 1em 1em 1em 3em;
+        width: 50%;
+        border-radius: 2em;
+        border: none;
+        font-size: 18px;
+        background-image: url("../public/loupe.png");
+        background-size: 2em;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+    }
+}
+.stockcontainer {
+    border: 1px solid white;
+    margin-top: 3em;
+    border-radius: 1em;
+    padding: 1em;
+    box-shadow: 0 0 2px rgb(223, 213, 15);
+}
+
+.stockData {
+    @include flexbox(row);
+    justify-content: center;
+    width: fit-content;
+    margin: 2em auto;
+    .stockheader {
+        @include flexbox(column);
+        width: auto;
+        justify-content: space-around;
+        h2 {
+            margin: 0.5em 1em;
+            font-size: xx-large;
+            button {
+                @include btn();
+                background-color: rgb(14, 216, 14);
+                border-radius: 5px;
+                vertical-align: middle;
+                margin-left: 1em;
+                &:hover {
+                    background-color: rgb(14, 244, 14);
+                }
+            }
+        }
+        div {
+            @include component();
+            @include tables();
+        }
+    }
+    .stockbody {
+        @include component();
+        @include tables();
+    }
+}

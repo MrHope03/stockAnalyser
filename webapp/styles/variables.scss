@@ -6,3 +6,46 @@ $dark-fg: #161b22;
 $light-fg: #f0f8ff;
 $dark-txt: #d6d6d6;
 $anchor-txt: #28bdf8;
+
+@mixin component() {
+    background-color: white;
+    color: black;
+    padding: 2em;
+    width: max-content;
+    border-radius: 10px;
+    margin: 1em;
+    p {
+        color: black;
+    }
+}
+@mixin flexbox($dir) {
+    display: flex;
+    flex-direction: $dir;
+    width: 100%;
+}
+@mixin tables {
+    p {
+        font-weight: 600;
+        font-size: 22px;
+        margin: 0;
+    }
+    table {
+        th,
+        td {
+            padding-right: 1em;
+            padding-top: 1em;
+            text-align: left;
+        }
+    }
+}
+@mixin btn {
+    background-color: #4c54d2;
+    padding: 0.6em;
+    border: none;
+    color: white;
+    font-size: 15px;
+    &:hover {
+        background-color: #3d48e1;
+        cursor: pointer;
+    }
+}

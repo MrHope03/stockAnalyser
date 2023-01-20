@@ -2,17 +2,6 @@
 .err {
     color: red;
 }
-@mixin btn {
-    background-color: #4c54d2;
-    padding: 0.6em;
-    border: none;
-    color: white;
-    font-size: 15px;
-    &:hover {
-        background-color: #3d48e1;
-        cursor: pointer;
-    }
-}
 .loginbtn {
     @include btn;
     padding: 0.5em 3em;
