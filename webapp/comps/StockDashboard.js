@@ -9,7 +9,7 @@ const StockDashboard = ({ stock, setBuyPortal, convertToINR }) => {
 	const { data: session } = useSession();
 
 	return (
-		<div className={style.stockcontainer}>
+		<div className={style.stockcontainer} id="stockdetail">
 			<div className={style.stockData}>
 				<div className={style.stockheader}>
 					<h2>{stock.symbol} : {stock.name} ({stock.stockExchange})

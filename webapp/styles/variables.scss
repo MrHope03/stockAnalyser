@@ -20,13 +20,16 @@ $anchor-txt: #28bdf8;
 }
 @mixin flexbox($dir) {
     display: flex;
+    @media only screen and (max-width: 400px) {
+        flex-wrap: wrap;
+    }
     flex-direction: $dir;
     width: 100%;
 }
 @mixin tables {
     p {
         font-weight: 600;
-        font-size: 22px;
+        font-size: 2em;
         margin: 0;
     }
     table {
@@ -59,7 +62,7 @@ $anchor-txt: #28bdf8;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -90%);
+        transform: translate(-50%, -50%);
         box-shadow: 0 0 100px #000;
         justify-content: center;
         align-items: center;

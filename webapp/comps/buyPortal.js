@@ -45,7 +45,7 @@ const BuyPortal = ({ stock, setBuyPortal, convertToINR }) => {
 					<tr>
 						<td>{convertToINR(stock.quote.price,stock.currency)} <b>INR</b></td>
 						<td>{(convertToINR(stock.quote.price,stock.currency) * quantity)} <b>INR</b></td>
-						<td>{balance ? balance.toFixed(2): '-'} <b>INR</b></td>
+						<td>{balance ? balance?.toFixed(2): '-'} <b>INR</b></td>
 					</tr>
 				</tbody>
 			</table>

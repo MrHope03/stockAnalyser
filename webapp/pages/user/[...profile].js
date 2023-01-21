@@ -72,7 +72,7 @@ const UserProfile = ({ user }) => {
 							<h3>Total Amount Invested</h3>
 							<p>{
 								(user.userStocks.reduce((total, stock) => total + (stock.price * stock.quantity), 0)).toFixed(2)
-							} USD</p>
+							} <b>INR</b></p>
 						</div>
 						<div>
 							<h3>Total Stocks Invested</h3>
