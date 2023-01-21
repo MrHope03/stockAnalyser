@@ -16,16 +16,49 @@
         color: #ff2222;
         font-size: 2em;
     }
-    .searchbar {
-        padding: 1em 1em 1em 3em;
-        width: 50%;
-        border-radius: 2em;
-        border: none;
-        font-size: 18px;
-        background-image: url("../public/loupe.png");
-        background-size: 2em;
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
+    .searchBarContainer {
+        @include flexbox(column);
+        width: auto;
+        margin: auto;
+        position: relative;
+        margin: 0;
+        .searchbar {
+            padding: 1em 1em 1em 3em;
+            width: 45em;
+            border-radius: 2em;
+            border: none;
+            font-size: 18px;
+            background-image: url("../public/loupe.png");
+            background-size: 2em;
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+        }
+        .datalist {
+            margin: 5px 0 0 0;
+            padding: 0;
+            width: 50em;
+            max-height: 200px;
+            top: 100%;
+            left: 0;
+            list-style: none;
+            border-radius: 10px;
+            background: #2b2a33;
+            overflow: hidden;
+            overflow-y: auto;
+            position: absolute;
+            // left: 25%;
+            // top: 21%;
+            li {
+                text-align: left;
+                padding: 0.8em 1em 0.8em 1em;
+                color: #999;
+                cursor: pointer;
+                &:hover {
+                    background: #444346;
+                    color: #fff;
+                }
+            }
+        }
     }
     @include Portal();
 }
