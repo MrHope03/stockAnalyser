@@ -23,7 +23,7 @@ const Signup = () => {
 			try {
 				const res = await axios.post('https://stockanalyser-production.up.railway.app/u', { ...signupData, name: signupData.username, providerType: "credentials" });
 				const data = await res.data;
-				signIn('credentials', { username: signupData.username, password: signupData.password, callbackUrl: 'http://localhost:3000' });
+				signIn('credentials', { username: signupData.username, password: signupData.password, callbackUrl: 'https://stock-analyser-eta.vercel.app' });
 			} catch (err) {
 				router.push("/")
 			}
@@ -70,10 +70,10 @@ const Signup = () => {
 			</form>
 			<p>or</p>
 			<div>
-				<button className={style.loginbtn} onClick={() => signIn('github', { callbackUrl: 'http://localhost:3000' })}>Signin using Github</button>
+				<button className={style.loginbtn} onClick={() => signIn('github', { callbackUrl: 'https://stock-analyser-eta.vercel.app' })}>Signin using Github</button>
 			</div>
 			<div>
-				<button className={style.loginbtn} onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000' })}>Signin using Google</button>
+				<button className={style.loginbtn} onClick={() => signIn('google', { callbackUrl: 'https://stock-analyser-eta.vercel.app' })}>Signin using Google</button>
 			</div>
 			<Link href='/login'>already have an account</Link>
 		</div>
