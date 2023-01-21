@@ -1,5 +1,7 @@
 package com.project.stockanalysis.controller;
 
+import com.project.stockanalysis.entity.StockRate;
+import com.project.stockanalysis.entity.UserStock;
 import com.project.stockanalysis.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +24,14 @@ public class StockRestController {
     }
 
     @PostMapping("/price")
-    public List<BigDecimal> getStockPrices(@RequestBody List<String> symbols) throws IOException {
-        List<BigDecimal> res = new ArrayList<>();
+    public List<StockRate> getStockPrices(@RequestBody List<String> symbols) throws IOException {
+        List<StockRate> res = new ArrayList<>();
         for ( String s : symbols) {
-            res.add(stockService.findStock(s).getQuote().getPrice());
-            System.out.println(s);
+            StockRate x = new StockRate();
+            x.setPrice(stockService.findStock(s).getQuote().getPrice());
+            x.setCurrency(stockService.findStock(s).getCurrency());
+            res.add(x);
+            System.out.println(x);
         }
         return res;
     }

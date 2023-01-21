@@ -3,10 +3,18 @@ import { useState } from "react";
 import style from "./../styles/market.module.scss"
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import useSWR from 'swr';
 
-const BuyPortal = ({ stock, setBuyPortal }) => {
+const fetcher = async (name) => {
+	const res = await axios.get(`http://localhost:8000/u/${name}`)
+	const data = await res.data
+	return data.balance
+}
+
+const BuyPortal = ({ stock, setBuyPortal, convertToINR }) => {
 	const [quantity, setQuantity] = useState(1);
 	const { data: session } = useSession();
+	const { data: balance } = useSWR('getUserBalance', () => fetcher(session.user.name));
 	const router = useRouter();
 
 	const handleSubmit = async (e) => {
@@ -14,7 +22,7 @@ const BuyPortal = ({ stock, setBuyPortal }) => {
 		const req = {
 			symbol: stock.symbol,
 			name: stock.name,
-			price: stock.quote.price,
+			price: convertToINR(stock.quote.price,stock.currency),
 			quantity: quantity,
 		}
 		const res = await axios.put(`http://localhost:8000/u/${session.user.name}`, req);
@@ -30,12 +38,14 @@ const BuyPortal = ({ stock, setBuyPortal }) => {
 					<tr>
 						<th>Curr Price</th>
 						<th>Purchase</th>
+						<th>Balance</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>{(stock.quote.price).toFixed(2)} {stock.currency}</td>
-						<td>{(stock.quote.price * quantity).toFixed(2)} {stock.currency}</td>
+						<td>{convertToINR(stock.quote.price,stock.currency)} <b>INR</b></td>
+						<td>{(convertToINR(stock.quote.price,stock.currency) * quantity)} <b>INR</b></td>
+						<td>{balance ? balance.toFixed(2): '-'} <b>INR</b></td>
 					</tr>
 				</tbody>
 			</table>
@@ -47,7 +57,7 @@ const BuyPortal = ({ stock, setBuyPortal }) => {
 					<input type="button" value="+" onClick={() => setQuantity(n => n + 1)} />
 				</div>
 				<div>
-					<input type="submit" value="Buy" />
+					<input type="submit" value={(convertToINR(stock.quote.price,stock.currency) * quantity > balance) ? 'recharge' : 'buy'} />
 					<button className={style.errBtn} onClick={() => setBuyPortal(false)}>Cancel</button>
 				</div>
 			</form>

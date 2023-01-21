@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import { useSession } from "next-auth/react";
 
 
-const StockDashboard = ({ stock, setBuyPortal }) => {
+const StockDashboard = ({ stock, setBuyPortal, convertToINR }) => {
 	const router = useRouter();
 	const { data: session } = useSession();
 
@@ -12,7 +12,7 @@ const StockDashboard = ({ stock, setBuyPortal }) => {
 		<div className={style.stockcontainer}>
 			<div className={style.stockData}>
 				<div className={style.stockheader}>
-					<h2>{stock.symbol} : {stock.name}
+					<h2>{stock.symbol} : {stock.name} ({stock.stockExchange})
 						<button onClick={() => { if (session) setBuyPortal(true); else router.push("/login") }}>Buy Stocks</button>
 					</h2>
 					<div>
@@ -29,11 +29,11 @@ const StockDashboard = ({ stock, setBuyPortal }) => {
 							</thead>
 							<tbody>
 								<tr>
-									<td>{stock.quote.dayLow}</td>
-									<td>{stock.quote.dayHigh}</td>
-									<td>{stock.quote.price}</td>
-									<td>{stock.quote.yearLow}</td>
-									<td>{stock.quote.yearHigh}</td>
+									<td>{convertToINR(stock.quote.dayLow, stock.currency)} <b>INR</b></td>
+									<td>{convertToINR(stock.quote.dayHigh, stock.currency)} <b>INR</b></td>
+									<td>{convertToINR(stock.quote.price, stock.currency)} <b>INR</b></td>
+									<td>{convertToINR(stock.quote.yearLow, stock.currency)} <b>INR</b></td>
+									<td>{convertToINR(stock.quote.yearHigh, stock.currency)} <b>INR</b></td>
 								</tr>
 							</tbody>
 						</table>
@@ -68,7 +68,7 @@ const StockDashboard = ({ stock, setBuyPortal }) => {
 						</thead>
 						<tbody>
 							<tr>
-								<td>{stock.stats.marketCap}</td>
+								<td>{convertToINR(stock.stats.marketCap, stock.currency)} <b>INR</b></td>
 								<td>{stock.stats.sharesOutstanding}</td>
 								<td>{stock.stats.pe}</td>
 								<td>{stock.stats.eps}</td>

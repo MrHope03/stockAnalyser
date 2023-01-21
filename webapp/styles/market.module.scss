@@ -10,6 +10,11 @@
     p {
         font-size: 5em;
         margin-bottom: 0.5em;
+        text-align: center;
+    }
+    .err {
+        color: #ff2222;
+        font-size: 2em;
     }
     .searchbar {
         padding: 1em 1em 1em 3em;
@@ -28,7 +33,7 @@
     border: 1px solid white;
     margin-top: 3em;
     border-radius: 1em;
-    padding: 1em;
+    width: 90%;
     box-shadow: 0 0 2px rgb(223, 213, 15);
 }
 
@@ -39,7 +44,7 @@
     margin: 2em auto;
     .stockheader {
         @include flexbox(column);
-        width: auto;
+        width: fit-content;
         justify-content: space-around;
         h2 {
             margin: 0.5em 1em;
@@ -63,10 +68,6 @@
     .stockbody {
         @include component();
         @include tables();
+        width: fit-content;
     }
-}
-
-.err {
-    color: red;
-    font-size: 1.2em;
 }

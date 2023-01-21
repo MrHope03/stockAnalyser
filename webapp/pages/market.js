@@ -5,6 +5,13 @@ import Loading from "../comps/loading"
 import StockDashboard from "../comps/StockDashboard";
 import BuyPortal from "../comps/buyPortal";
 import { Raleway } from "@next/font/google";
+import useSWR from 'swr';
+
+const fetcher = async () => {
+	const res = await axios.get(`https://api.exchangerate-api.com/v4/latest/INR`);
+	const data = await res.data;
+	return data;
+}
 
 const raleway = Raleway({
 	weight: ['500'],
@@ -18,6 +25,12 @@ const Market = () => {
 	const [stock, setStock] = useState(null)
 	const [buyPortal, setBuyPortal] = useState(false);
 	const [errMsg, setErrMsg] = useState("");
+	const { data: currRates } = useSWR('currencyConverter', fetcher)
+
+	const convertToINR = (amt, currency) => {
+		console.log(amt,currency);
+		return (amt / currRates.rates[currency]).toFixed(2);
+	}
 
 	const handleChange = (e) => {
 		setSymbol(e.target.value);
@@ -51,10 +64,10 @@ const Market = () => {
 				<p className={style.err}>{errMsg}</p>
 			}
 			{stock &&
-				<StockDashboard stock={stock} setBuyPortal={setBuyPortal} />
+				<StockDashboard stock={stock} setBuyPortal={setBuyPortal} convertToINR={convertToINR} />
 			}
 			{buyPortal &&
-				<BuyPortal stock={stock} setBuyPortal={setBuyPortal} />
+				<BuyPortal stock={stock} setBuyPortal={setBuyPortal} convertToINR={convertToINR} />
 			}
 		</section>
 	)

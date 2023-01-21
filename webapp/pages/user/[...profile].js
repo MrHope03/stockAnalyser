@@ -39,11 +39,23 @@ const fetcher = async (user) => {
 	return data
 }
 
+const currencyFetcher = async () => {
+	const res = await axios.get(`https://api.exchangerate-api.com/v4/latest/INR`);
+	const data = await res.data;
+	return data;
+}
+
+
 const UserProfile = ({ user }) => {
 	const { data: currPrice } = useSWR('fetchRealtimeData', () => fetcher(user));
 	const [sellPortal, setSellPortal] = useState(-1);
 	const [addBalance, setAddBalance] = useState(false);
+	const { data: currRates } = useSWR('currencyConverter', currencyFetcher)
 
+	const convertToINR = (amt, currency) => {
+		console.log(amt, currency);
+		return (amt / currRates.rates[currency]).toFixed(2);
+	}
 	return (
 		<>
 			<h1 className={style.dashboardTitle}>DashBoard</h1>
@@ -54,7 +66,7 @@ const UserProfile = ({ user }) => {
 							<h3> User Balance
 								<button onClick={() => setAddBalance(true)}> + </button>
 							</h3>
-							<p>{(user.balance).toFixed(2)} USD</p>
+							<p>{(user.balance).toFixed(2)} <b>INR</b></p>
 						</div>
 						<div>
 							<h3>Total Amount Invested</h3>
@@ -86,8 +98,8 @@ const UserProfile = ({ user }) => {
 												<td>{stock.symbol}</td>
 												<td>{stock.name}</td>
 												<td>{stock.quantity}</td>
-												<td>{(stock.price).toFixed(2)} USD</td>
-												<td>{currPrice ? currPrice[key] : "-"} USD</td>
+												<td>{(stock.price).toFixed(2)} <b>INR</b></td>
+												<td>{currPrice ? convertToINR(currPrice[key]?.price,currPrice[key]?.currency) : "-"} <b>INR</b></td>
 											</tr>
 										</tbody>
 									</table>
@@ -111,7 +123,7 @@ const UserProfile = ({ user }) => {
 					<button className={style.logout} onClick={() => signOut({ callbackUrl: "http://localhost:3000" })}>log out</button>
 				</div>
 				{sellPortal != -1 &&
-					<SellPortal maxQty={user.userStocks[sellPortal].quantity} price={currPrice[sellPortal]} stock={user.userStocks[sellPortal]} setSellPortal={setSellPortal} />
+					<SellPortal maxQty={user.userStocks[sellPortal].quantity} price={convertToINR(currPrice[sellPortal].price,currPrice[sellPortal].currency)} stock={user.userStocks[sellPortal]} setSellPortal={setSellPortal} />
 				}{addBalance &&
 					<Wallet currAmt={user.balance} setAddBalance={setAddBalance} user={user} />
 				}

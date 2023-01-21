@@ -34,7 +34,7 @@ const SellPortal = ({ maxQty, price, stock, setSellPortal }) => {
 				</thead>
 				<tbody>
 					<tr>
-						<td>{(price).toFixed(2)} USD</td>
+						<td>{price} USD</td>
 						<td>{(price * quantity * -1 ).toFixed(2)} USD</td>
 					</tr>
 				</tbody>
