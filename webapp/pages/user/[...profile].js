@@ -119,7 +119,7 @@ const UserProfile = ({ user }) => {
 					<img src={user.image} alt="user-avatar" height={150} width={150} />
 					<p>{user.name}</p>
 					<p>{user.email}</p>
-					<button className={style.logout} onClick={() => signOut({ callbackUrl: "https://stock-analyser-eta.vercel.app" })}>log out</button>
+					<button className={style.logout} onClick={() => signOut({ callbackUrl: "https://stock-analyser-mrhope03.vercel.app/" })}>log out</button>
 				</div>
 				{sellPortal != -1 &&
 					<SellPortal maxQty={user.userStocks[sellPortal].quantity} price={convertToINR(currPrice[sellPortal].price, currPrice[sellPortal].currency)} stock={user.userStocks[sellPortal]} setSellPortal={setSellPortal} />
