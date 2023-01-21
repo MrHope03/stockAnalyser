@@ -98,7 +98,7 @@ const UserProfile = ({ user }) => {
 												<td>{stock.name}</td>
 												<td>{stock.quantity}</td>
 												<td>{(stock.price).toFixed(2)} <b>INR</b></td>
-												<td>{currPrice ? convertToINR(currPrice[key]?.price,currPrice[key]?.currency) : "-"} <b>INR</b></td>
+												<td>{currPrice ? convertToINR(currPrice[key]?.price, currPrice[key]?.currency) : "-"} <b>INR</b></td>
 											</tr>
 										</tbody>
 									</table>
@@ -119,10 +119,10 @@ const UserProfile = ({ user }) => {
 					<img src={user.image} alt="user-avatar" height={150} width={150} />
 					<p>{user.name}</p>
 					<p>{user.email}</p>
-					<button className={style.logout} onClick={() => signOut({ callbackUrl: "http://localhost:3000" })}>log out</button>
+					<button className={style.logout} onClick={() => signOut({ callbackUrl: "https://stock-analyser-eta.vercel.app" })}>log out</button>
 				</div>
 				{sellPortal != -1 &&
-					<SellPortal maxQty={user.userStocks[sellPortal].quantity} price={convertToINR(currPrice[sellPortal].price,currPrice[sellPortal].currency)} stock={user.userStocks[sellPortal]} setSellPortal={setSellPortal} />
+					<SellPortal maxQty={user.userStocks[sellPortal].quantity} price={convertToINR(currPrice[sellPortal].price, currPrice[sellPortal].currency)} stock={user.userStocks[sellPortal]} setSellPortal={setSellPortal} />
 				}{addBalance &&
 					<Wallet currAmt={user.balance} setAddBalance={setAddBalance} user={user} />
 				}

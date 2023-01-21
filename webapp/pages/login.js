@@ -65,10 +65,10 @@ const Login = () => {
 			</form>
 			<p>or</p>
 			<div>
-				<button className={style.loginbtn} onClick={() => signIn('github', { callbackUrl: 'http://localhost:3000' })}>Signin using Github</button>
+				<button className={style.loginbtn} onClick={() => signIn('github', { callbackUrl: 'https://stock-analyser-eta.vercel.app' })}>Signin using Github</button>
 			</div>
 			<div>
-				<button className={style.loginbtn} onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000' })}>Signin using Google</button>
+				<button className={style.loginbtn} onClick={() => signIn('google', { callbackUrl: 'https://stock-analyser-eta.vercel.app' })}>Signin using Google</button>
 			</div>
 			<Link href='/signup'>create a new account</Link>
 		</div>
