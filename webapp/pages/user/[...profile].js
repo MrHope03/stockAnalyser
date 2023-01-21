@@ -53,8 +53,7 @@ const UserProfile = ({ user }) => {
 	const { data: currRates } = useSWR('currencyConverter', currencyFetcher)
 
 	const convertToINR = (amt, currency) => {
-		console.log(amt, currency);
-		return (amt / currRates.rates[currency]).toFixed(2);
+		return (amt / currRates.rates[currency.toUpperCase()]).toFixed(2);
 	}
 	return (
 		<>

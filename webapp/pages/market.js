@@ -34,8 +34,7 @@ const Market = () => {
 	const [searchVal, setSearchVal] = useState("");
 
 	const convertToINR = (amt, currency) => {
-		console.log(amt, currency);
-		return (amt / currRates.rates[currency]).toFixed(2);
+		return (amt / currRates.rates[currency.toUpperCase()]).toFixed(2);
 	}
 
 	const handleChange = (e) => {
@@ -48,7 +47,6 @@ const Market = () => {
 				const regex = new RegExp('^' + e.target.value + '.*', 'i')
 				return (regex.test(curr.Ticker) || regex.test(curr.Name));
 			}))
-			console.log(symbolList)
 		}
 	}
 	const handleSubmit = async (e) => {
@@ -63,7 +61,6 @@ const Market = () => {
 				setStock(data);
 			}
 			catch (err) {
-				console.log(err);
 				setErrMsg("Error: couldn't find the stock ID you were looking for")
 			}
 			setLoading(false)

@@ -9,10 +9,8 @@ const Wallet = ({ currAmt, user, setAddBalance }) => {
 	const recharge = async (e) => {
 		e.preventDefault();
 		user.balance += parseFloat(amt)
-		console.log(user)
 		const res = await axios.put(`http://localhost:8000/u/edit/${user.name}`, user);
 		const data = await res.data;
-		console.log(data);
 		router.reload();
 	}
 	return (

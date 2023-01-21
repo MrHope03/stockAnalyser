@@ -34,7 +34,6 @@ export const authOptions = {
           else
             return null;
         } catch {
-          console.log(error);
           return null;
         }
       }

@@ -28,7 +28,6 @@ const Login = () => {
 			});
 		}
 		catch (err) {
-			console.log('NotValidUser' + err);
 			setErrMsg(true);
 		}
 

@@ -19,17 +19,15 @@ const Signup = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(signupData)
 		if (signupData.confirmPassword == signupData.password) {
 			try {
 				const res = await axios.post('http://localhost:8000/u', { ...signupData, name: signupData.username, providerType: "credentials" });
 				const data = await res.data;
 				signIn('credentials', { username: signupData.username, password: signupData.password, callbackUrl: 'http://localhost:3000' });
 			} catch (err) {
-				console.log(err)
+				router.push("/")
 			}
 		} else {
-			console.log("SignupError")
 			setErrMsg(true);
 		}
 	}
