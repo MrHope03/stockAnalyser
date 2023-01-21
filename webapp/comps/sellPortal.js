@@ -17,7 +17,7 @@ const SellPortal = ({ maxQty, price, stock, setSellPortal }) => {
 			price: price,
 			quantity: quantity,
 		}
-		const res = await axios.put(`http://localhost:8000/u/${session.user.name}`, req);
+		const res = await axios.put(`https://stockanalyser-production.up.railway.app/u/${session.user.name}`, req);
 		const data = await res.data;
 		router.reload();
 	}

@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import useSWR from 'swr';
 
 const fetcher = async (name) => {
-	const res = await axios.get(`http://localhost:8000/u/${name}`)
+	const res = await axios.get(`https://stockanalyser-production.up.railway.app/u/${name}`)
 	const data = await res.data
 	return data.balance
 }
@@ -25,7 +25,7 @@ const BuyPortal = ({ stock, setBuyPortal, convertToINR }) => {
 			price: convertToINR(stock.quote.price,stock.currency),
 			quantity: quantity,
 		}
-		const res = await axios.put(`http://localhost:8000/u/${session.user.name}`, req);
+		const res = await axios.put(`https://stockanalyser-production.up.railway.app/u/${session.user.name}`, req);
 		const data = await res.data;
 		router.push(`/user/${session.user.name}`)
 	}

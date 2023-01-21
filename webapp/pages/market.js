@@ -56,7 +56,7 @@ const Market = () => {
 			setErrMsg("")
 			setLoading(true)
 			try {
-				const res = await axios.get(`http://localhost:8000/stock/${symbol}`);
+				const res = await axios.get(`https://stockanalyser-production.up.railway.app/stock/${symbol}`);
 				const data = await res.data;
 				setStock(data);
 			}

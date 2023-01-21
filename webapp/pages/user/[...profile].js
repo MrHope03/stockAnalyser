@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
 		}
 	}
 	const uname = context.params.profile;
-	const res = await axios.get(`http://localhost:8000/u/${uname}`);
+	const res = await axios.get(`https://stockanalyser-production.up.railway.app/u/${uname}`);
 	const user = await res.data;
 	return {
 		props: { user },
@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
 }
 
 const fetcher = async (user) => {
-	const res = await axios.post('http://localhost:8000/price', user.userStocks.map((stock) => stock.symbol));
+	const res = await axios.post('https://stockanalyser-production.up.railway.app/price', user.userStocks.map((stock) => stock.symbol));
 	const data = await res.data;
 	return data
 }

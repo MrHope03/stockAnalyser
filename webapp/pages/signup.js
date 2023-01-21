@@ -21,7 +21,7 @@ const Signup = () => {
 		e.preventDefault();
 		if (signupData.confirmPassword == signupData.password) {
 			try {
-				const res = await axios.post('http://localhost:8000/u', { ...signupData, name: signupData.username, providerType: "credentials" });
+				const res = await axios.post('https://stockanalyser-production.up.railway.app/u', { ...signupData, name: signupData.username, providerType: "credentials" });
 				const data = await res.data;
 				signIn('credentials', { username: signupData.username, password: signupData.password, callbackUrl: 'http://localhost:3000' });
 			} catch (err) {
