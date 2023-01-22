@@ -1,12 +1,21 @@
 import CandleStickGraph from "../comps/CandleStickGraph";
 import style from "./../styles/market.module.scss"
 import { useRouter } from "next/router"
+import axios from 'axios';
+import PredictionGraph from "./PredictionGraph";
 import { useSession } from "next-auth/react";
-
+import { useState } from "react";
 
 const StockDashboard = ({ stock, setBuyPortal, convertToINR }) => {
 	const router = useRouter();
 	const { data: session } = useSession();
+	const [series, setSeries] = useState(null);
+
+	const predictData = async () => {
+		const res = await axios.get('https://stockanalyser-production.up.railway.app' + `/predict/${stock.symbol}`);
+		const data = await res.data;
+		setSeries(data);
+	}
 
 	return (
 		<div className={style.stockcontainer} id="stockdetail">
@@ -78,6 +87,11 @@ const StockDashboard = ({ stock, setBuyPortal, convertToINR }) => {
 				</div>
 			</div>
 			<CandleStickGraph hist={stock.history} />
+			{series ?
+				<PredictionGraph series={series} />
+				:
+				<button className={style.predict} onClick={predictData}>Predict</button>
+			}
 		</div>
 	);
 }

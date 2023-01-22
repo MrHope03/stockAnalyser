@@ -74,6 +74,13 @@
     border-radius: 1em;
     width: 95%;
     box-shadow: 0 0 2px rgb(223, 213, 15);
+    .predict {
+        @include btn();
+        display: block;
+        margin: 1em auto;
+        width: 7em;
+        border-radius: 5px;
+    }
 }
 
 .stockData {

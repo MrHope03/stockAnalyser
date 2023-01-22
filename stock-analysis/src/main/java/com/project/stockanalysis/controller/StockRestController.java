@@ -1,5 +1,6 @@
 package com.project.stockanalysis.controller;
 
+import com.project.stockanalysis.entity.Prediction;
 import com.project.stockanalysis.entity.StockRate;
 import com.project.stockanalysis.entity.UserStock;
 import com.project.stockanalysis.service.StockService;
@@ -34,6 +35,11 @@ public class StockRestController {
             System.out.println(x);
         }
         return res;
+    }
+
+    @GetMapping("/predict/{symbol}")
+    public List<Prediction> predictPrices (@PathVariable String symbol) throws IOException {
+        return stockService.predictStockMarket(symbol);
     }
 
 }
