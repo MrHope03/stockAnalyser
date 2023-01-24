@@ -103,7 +103,7 @@ const UserProfile = ({ user }) => {
 										</tbody>
 									</table>
 									{currPrice &&
-										currPrice[key] < stock.price ? (
+										convertToINR(currPrice[key]?.price, currPrice[key]?.currency) < stock.price ? (
 										<img src="/decrease.png" alt="Stock decrease" height={50} width={50} />
 									) : (
 										<img src="/increase.png" alt="Stock increase" height={50} width={50} />
